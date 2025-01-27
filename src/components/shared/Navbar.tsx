@@ -42,6 +42,9 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
             <li>
               <Link href="/">Home</Link>
             </li>
+            <li>
+              <Link href="/product">Products</Link>
+            </li>
 
             <li>
               <Link href="/about">About Us</Link>
@@ -59,6 +62,9 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/product">Products</Link>
           </li>
 
           <li>

@@ -2,7 +2,7 @@
 import { FormValues } from "@/app/login/page";
 
 const LoginUser = async (data: FormValues) => {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/auth/login`, {
+  const res = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
