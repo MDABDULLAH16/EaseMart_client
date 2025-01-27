@@ -1,14 +1,20 @@
+"use client";
+import LoginUser from "@/utils/actions/LoginUser";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
-type FormValues = {
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
+export type FormValues = {
   email: string;
   password: string;
 };
 
 const LoginPage = () => {
+  const route = useRouter();
   const {
     register,
     handleSubmit,
@@ -16,7 +22,24 @@ const LoginPage = () => {
   } = useForm<FormValues>();
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
+    try {
+      const res = await LoginUser(data);
+      // console.log("after login", res);
+      if (!res?.data?.accessToken) {
+        toast.warning(res?.message);
+      }
+      if (res?.data?.accessToken) {
+        console.log("accessTOken", res?.data?.accessToken);
+
+        toast.success("user login successful");
+        localStorage.setItem("accessToken", res?.data?.accessToken);
+        route.push("/dashboard");
+      }
+    } catch (err: any) {
+      toast.warning(err.message);
+    }
+
+    // console.log(data);
   };
 
   return (
@@ -35,8 +58,8 @@ const LoginPage = () => {
           />
         </div>
 
-        <div className="card w-[70%] h-[80%] shadow-xl bg-base-100">
-          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+        <div className="card w-[70%] h-[90%] shadow-xl bg-base-100  ">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body pb-0">
             <div className="form-control mt-5">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -76,7 +99,7 @@ const LoginPage = () => {
             </p>
           </form>
           <p className="text-center">Or Sign Up Using</p>
-          <div className="flex justify-center mb-10 mt-2">
+          <div className="flex justify-center mb-10 mt-2 ">
             <button
               onClick={() =>
                 signIn("google", {

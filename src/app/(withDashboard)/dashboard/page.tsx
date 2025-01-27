@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
+
+  console.log(session);
   console.log(session);
 
   return (
