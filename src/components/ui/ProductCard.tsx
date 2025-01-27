@@ -1,21 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaShoppingCart, FaHeart } from "react-icons/fa";
+// import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { TProduct } from "@/types/TProducts";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import Link from "next/link";
 
 const ProductCard = ({ product }: { product: TProduct }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   //   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const handleAddToCart = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    toast.success("Product added successfully");
-  };
+  const handleAddToCart = () => {};
 
   //   const handleWishlist = () => {
   //     setIsWishlisted(!isWishlisted);
@@ -26,12 +21,11 @@ const ProductCard = ({ product }: { product: TProduct }) => {
       {/* Image Section */}
       <div className="relative">
         <Image
-          src={product.images}
+          src={product.image}
           alt={product.name}
           width={400}
           height={400}
           className="w-full h-64 object-cover"
-          loading="lazy"
         />
 
         <div className="absolute top-4 left-4 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-sm font-semibold">
@@ -68,18 +62,13 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         {/* Add to Cart Button */}
         <button
           onClick={handleAddToCart}
-          disabled={isLoading}
           className="w-full py-3 px-4 bg-accent text-white text-primary-foreground rounded-md font-semibold flex items-center justify-center space-x-2 hover:bg-primary/60 transition-colors duration-200 disabled:opacity-70"
           aria-label="Add to cart"
         >
-          {isLoading ? (
-            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-          ) : (
-            <>
-              <FaShoppingCart className="text-lg" />
-              <span>Add to Cart</span>
-            </>
-          )}
+          <Link href={`/product/${product._id}`}>
+            {" "}
+            <span>See Details</span>
+          </Link>
         </button>
       </div>
     </div>

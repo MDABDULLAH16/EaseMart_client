@@ -1,4 +1,4 @@
-import Products from "@/components/Products";
+import ProductContainer from "@/components/ProductContainer";
 
 const ProductsPage = async () => {
   try {
@@ -21,7 +21,7 @@ const ProductsPage = async () => {
         <h1 className="text-3xl font-bold text-center my-6">
           Stay busy with Ease Product
         </h1>
-        <Products products={products} categories={categories} />
+        <ProductContainer products={products} categories={categories} />
       </div>
     );
   } catch (error) {

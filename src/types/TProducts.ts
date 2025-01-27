@@ -1,12 +1,10 @@
 export interface TProduct {
-  image: string | undefined;
-
   name: string;
   description: string;
   price: number;
   stockQuantity: number;
   category: string;
-  images: string;
+  image: string;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;

@@ -4,7 +4,7 @@ import { TProduct } from "@/types/TProducts";
 import ProductCard from "./ui/ProductCard";
 import { TCategory } from "@/types/TCategory";
 
-const Products = ({
+const ProductContainer = ({
   products,
   categories,
 }: {
@@ -144,4 +144,4 @@ const Products = ({
   );
 };
 
-export default Products;
+export default ProductContainer;

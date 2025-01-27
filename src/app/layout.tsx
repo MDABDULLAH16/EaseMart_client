@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOption";
 
 import { Bounce, ToastContainer } from "react-toastify";
+import Providers from "@/lib/Providers";
 
 export const metadata: Metadata = {
   title: "EaseMart",
@@ -19,24 +20,26 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOptions);
   return (
-    <html lang="en" data-theme="light">
-      <body>
-        <Navbar session={session} />
-        <div className="min-h-screen w-[90%] mx-auto">{children}</div>
-        <ToastContainer
-          position="top-center"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          transition={Bounce}
-        ></ToastContainer>
-      </body>
-    </html>
+    <Providers>
+      <html lang="en" data-theme="light">
+        <body>
+          <Navbar session={session} />
+          <div className="min-h-screen w-[90%] mx-auto">{children}</div>
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          ></ToastContainer>
+        </body>
+      </html>
+    </Providers>
   );
 }
