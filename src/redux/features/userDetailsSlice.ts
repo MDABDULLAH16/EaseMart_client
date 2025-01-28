@@ -1,57 +1,42 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// import { RootState } from "../store";
-// import localStorage from "redux-persist/es/storage";
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-// // Define the user information type
-// export type TUserInfo = {
-//   name: string;
-//   email: string;
-//   password: string;
+export type TUserInfo = {
+  _id: string;
+  name: string;
+  email: string;
+  role: "admin" | "user";
+  address: string;
+};
 
-//   role: "admin" | "user";
-//   address: string;
-// };
+interface UserDetailsState {
+  userInfo: TUserInfo | null;
+}
 
-// interface UserDetailsState {
-//   userDetails: TUserInfo | null;
-// }
+const initialState: UserDetailsState = {
+  userInfo:
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("userInfo") || "null")
+      : null,
+};
 
-// const initialState: UserDetailsState = {
-//   userDetails: null,
-// };
+const userDetailsSlice = createSlice({
+  name: "userDetails",
+  initialState,
+  reducers: {
+    setUserInfo: (state, action) => {
+      state.userInfo = action.payload;
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
+    },
+    clearUserInfo: (state) => {
+      state.userInfo = null;
+      localStorage.removeItem("userInfo");
+    },
+  },
+});
 
-// const userDetailsSlice = createSlice({
-//   name: "userDetails",
-//   initialState: (() => {
-//     try {
-//       const storedUserDetails = localStorage.getItem("userDetails");
-//       if (storedUserDetails) {
-//         return { userDetails: JSON.parse(storedUserDetails) };
-//       }
-//     } catch (error) {
-//       console.error("Error parsing userDetails from localStorage:", error);
-//       localStorage.removeItem("userDetails"); // Clear corrupted data
-//     }
-//     return initialState;
-//   })(),
-//   reducers: {
-//     setUserDetails: (state, action) => {
-//       state.userDetails = action.payload.userDetails;
-//       localStorage.setItem("userDetails", JSON.stringify(state.userDetails));
-//     },
-//     clearUserDetails: (state) => {
-//       state.userDetails = null;
-//       localStorage.removeItem("userDetails");
-//     },
-//   },
-// });
+export const { setUserInfo, clearUserInfo } = userDetailsSlice.actions;
 
-// // Export actions
-// export const { setUserDetails, clearUserDetails } = userDetailsSlice.actions;
+export const selectUserInfo = (state: RootState) => state.userDetails.userInfo;
 
-// // Export the reducer
-// export default userDetailsSlice.reducer;
-
-// // Selector for accessing user details in the state
-// export const selectUserDetails = (state: RootState) =>
-//   state.userDetails.userDetails;
+export default userDetailsSlice.reducer;

@@ -1,3 +1,4 @@
+import UserProfile from "@/components/shared/UserProfile";
 import { authOptions } from "@/utils/authOption";
 import { getServerSession } from "next-auth";
 
@@ -12,6 +13,7 @@ const DashboardPage = async () => {
       <h1 className="text-4xl text-center mt-10">
         Welcome {session?.user?.name}
       </h1>
+      <UserProfile />
     </div>
   );
 };

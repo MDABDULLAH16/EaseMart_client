@@ -3,6 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "../../assets/EaseMart.png";
 import { signOut } from "next-auth/react";
+import {
+  clearUserInfo,
+  selectUserInfo,
+} from "@/redux/features/userDetailsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 type UserProps = {
   user?: {
@@ -13,8 +19,18 @@ type UserProps = {
 };
 
 const Navbar = ({ session }: { session: UserProps | null }) => {
-  console.log(session);
+  console.log(session?.user?.name);
+  const user = useSelector(selectUserInfo);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  console.log(user);
+  const handleLogOut = async () => {
+    await signOut({ redirect: false, callbackUrl: "/login" }); // Add NextAuth signout options
+    dispatch(clearUserInfo());
 
+    router.push("/login");
+    router.refresh(); // Force refresh to clear any cached state
+  };
   return (
     <div className="navbar bg-base-100  border-b  w-[90%] mx-auto">
       <div className="navbar-start">
@@ -55,6 +71,15 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
             <li>
               <Link href="/support">Support</Link>
             </li>
+            {user?.role === "admin" ? (
+              <li>
+                <Link href="/admin">Admin Panel</Link>
+              </li>
+            ) : (
+              <li>
+                <Link href="/dashboard">Dashboard</Link>
+              </li>
+            )}
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost text-xl">
@@ -79,15 +104,24 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
           <li>
             <Link href="/support">Support</Link>
           </li>
-          <li>
-            <Link href="/dashboard">Dashboard</Link>
-          </li>
+          {user?.role === "admin" ? (
+            <li>
+              <Link href="/admin">Admin Panel</Link>
+            </li>
+          ) : (
+            <li>
+              <Link href="/dashboard">Dashboard</Link>
+            </li>
+          )}
         </ul>
+        <div>
+          <h1>{user?.name}</h1>
+        </div>
       </div>
       <div className="navbar-end">
-        {session?.user ? (
+        {session?.user || user ? (
           <button
-            onClick={() => signOut()}
+            onClick={handleLogOut}
             className="btn btn-error btn-outline text-white rounded-full px-5"
           >
             Logout

@@ -1,4 +1,6 @@
 "use client";
+import { setUserInfo } from "@/redux/features/userDetailsSlice";
+
 import LoginUser from "@/utils/actions/LoginUser";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -6,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 export type FormValues = {
@@ -14,6 +17,7 @@ export type FormValues = {
 };
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const route = useRouter();
   const {
     register,
@@ -24,24 +28,31 @@ const LoginPage = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       const res = await LoginUser(data);
-      // console.log("after login", res);
+
       if (!res?.data?.accessToken) {
         toast.warning(res?.message);
+        return; // Add return to prevent further execution
       }
-      if (res?.data?.accessToken) {
-        console.log("accessTOken", res?.data?.accessToken);
 
-        toast.success("user login successful");
-        localStorage.setItem("accessToken", res?.data?.accessToken);
-        route.push("/dashboard");
-      }
+      // Only execute if we have an access token
+      console.log("accessToken", res.data.accessToken);
+      console.log(res.data.userInfo);
+
+      toast.success("User login successful");
+
+      // Store access token
+      localStorage.setItem("accessToken", res.data.accessToken);
+
+      // Store user info as JSON string
+      const userInfo = res.data.userInfo;
+      localStorage.setItem("userInfo", JSON.stringify(userInfo)); // Add JSON.stringify
+      // Save to Redux and localStorage
+      dispatch(setUserInfo(userInfo));
+      route.push("/dashboard");
     } catch (err: any) {
       toast.warning(err.message);
     }
-
-    // console.log(data);
   };
-
   return (
     <div className="my-10">
       <h1 className="text-center text-4xl mb-5">
