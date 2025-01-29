@@ -1,7 +1,6 @@
 export interface TCategory {
-  id: string;
+  _id?: string;
   name: string;
   description?: string;
   image?: string;
-  isDeleted?: boolean;
 }

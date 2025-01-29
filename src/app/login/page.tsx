@@ -31,28 +31,31 @@ const LoginPage = () => {
 
       if (!res?.data?.accessToken) {
         toast.warning(res?.message);
-        return; // Add return to prevent further execution
+        return; // Prevent further execution if no token
       }
 
-      // Only execute if we have an access token
+      // Log token and user info
       console.log("accessToken", res.data.accessToken);
       console.log(res.data.userInfo);
 
+      // Show success message
       toast.success("User login successful");
 
-      // Store access token
-      localStorage.setItem("accessToken", res.data.accessToken);
-
-      // Store user info as JSON string
+      // Save token and user info to localStorage
       const userInfo = res.data.userInfo;
-      localStorage.setItem("userInfo", JSON.stringify(userInfo)); // Add JSON.stringify
-      // Save to Redux and localStorage
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+
+      // Dispatch user info to Redux
       dispatch(setUserInfo(userInfo));
+
+      // Redirect to dashboard
       route.push("/dashboard");
     } catch (err: any) {
       toast.warning(err.message);
     }
   };
+
   return (
     <div className="my-10">
       <h1 className="text-center text-4xl mb-5">
