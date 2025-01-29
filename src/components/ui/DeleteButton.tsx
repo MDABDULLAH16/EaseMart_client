@@ -13,7 +13,7 @@ const DeleteButton = ({ categoryId }: { categoryId: string }) => {
       await CategoryDelete(categoryId);
       toast.success("Category deleted successfully!");
       // Redirect or update UI after deletion
-      router.push("/api/categoryManagement");
+      router.push("/admin/categoryManagement");
     } catch (error: any) {
       toast.error(error.message || "Failed to delete category.");
     }

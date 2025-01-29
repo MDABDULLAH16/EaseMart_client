@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+
 import Image from "next/image";
 // import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { TProduct } from "@/types/TProducts";
@@ -11,10 +11,6 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   //   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const handleAddToCart = () => {};
-
-  //   const handleWishlist = () => {
-  //     setIsWishlisted(!isWishlisted);
-  //   };
 
   return (
     <div className="max-w-sm mx-auto bg-card rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">

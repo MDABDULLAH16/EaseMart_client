@@ -2,7 +2,8 @@
 import { TCategory } from "@/types/TCategory";
 
 const CategoryCreate = async (data: TCategory) => {
-  const res = await fetch(`${process.env.BACKEND_URL}/categories`, {
+  const url = process.env.BACKEND_URL;
+  const res = await fetch(`${url}/categories`, {
     method: "POST",
     headers: {
       "Content-type": "Application/json",

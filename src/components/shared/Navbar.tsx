@@ -68,9 +68,9 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
             <li>
               <Link href="/about">About Us</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/support">Support</Link>
-            </li>
+            </li> */}
             {user?.role === "admin" ? (
               <li>
                 <Link href="/admin">Admin Panel</Link>
@@ -101,9 +101,9 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
           <li>
             <Link href="/about">About Us</Link>
           </li>
-          <li>
+          {/* <li>
             <Link href="/support">Support</Link>
-          </li>
+          </li> */}
           {user?.role === "admin" ? (
             <li>
               <Link href="/admin">Admin Panel</Link>

@@ -7,6 +7,7 @@ import { authOptions } from "@/utils/authOption";
 
 import { Bounce, ToastContainer } from "react-toastify";
 import Providers from "@/lib/Providers";
+import Footer from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
   title: "EaseMart",
@@ -38,6 +39,7 @@ export default async function RootLayout({
             theme="light"
             transition={Bounce}
           ></ToastContainer>
+          <Footer></Footer>
         </body>
       </html>
     </Providers>

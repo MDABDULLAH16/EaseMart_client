@@ -50,7 +50,7 @@ const LoginPage = () => {
       dispatch(setUserInfo(userInfo));
 
       // Redirect to dashboard
-      route.push("/dashboard");
+      route.push("/");
     } catch (err: any) {
       toast.warning(err.message);
     }

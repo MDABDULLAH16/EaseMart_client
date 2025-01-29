@@ -5,11 +5,11 @@ export interface TProduct {
   stockQuantity: number;
   category: string;
   image: string;
-  isDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
-  _id: string;
-  _v: number;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  _id?: string;
+  _v?: number;
 }
 // {
 //   isDeleted: false,

@@ -17,44 +17,61 @@ const CartPage = () => {
   const router = useRouter();
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
+  // User details from redux store
+  const userInfo = useSelector((state: RootState) => state.userDetails);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     setIsHydrated(true);
   }, []);
 
+  // Handle removal of item from cart
   const handleRemoveItem = (id: string) => {
     dispatch(removeFromCart(id));
   };
 
+  // Handle updating stock quantity of an item
   const handleStockQuantityChange = (id: string, newStockQuantity: number) => {
     if (newStockQuantity > 0) {
       dispatch(updateQuantity({ id, quantity: newStockQuantity }));
     }
   };
 
+  // Calculate the total price of the cart
   const calculateTotal = () => {
     return cartItems
       .reduce((total, item) => total + item.price * item.stockQuantity, 0)
       .toFixed(2);
   };
 
+  // Handle checkout action
   const handleCheckout = () => {
-    // Redirect to the payment form with cart details
+    // Redirect to the checkout page
     router.push("/checkout");
   };
 
+  // Hydration check for SSR
   if (!isHydrated) {
-    return null; // Wait for hydration
+    return null; // Wait for hydration to avoid rendering issues on SSR
   }
 
+  // Display message when cart is empty
   if (cartItems.length === 0) {
     return <div className="text-center">Your cart is empty!</div>;
   }
 
+  // Get last login from userInfo (or localStorage as a fallback)
+  const lastLogin = userInfo?.lastLogin || localStorage.getItem("lastLogin");
+
   return (
     <div className="max-w-6xl mx-auto p-4 bg-gray-50 rounded-lg shadow-md">
       <h1 className="text-3xl font-bold text-center mb-8">Your Cart</h1>
+
+      {lastLogin && (
+        <div className="mb-4 text-sm text-gray-600">
+          <strong>Last Login:</strong> {new Date(lastLogin).toLocaleString()}
+        </div>
+      )}
 
       <div className="space-y-6">
         {cartItems.map((item: TProduct) => (

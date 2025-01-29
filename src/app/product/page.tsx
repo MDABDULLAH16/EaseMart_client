@@ -1,6 +1,5 @@
 import ProductContainer from "@/components/ProductContainer";
-import { selectUserInfo } from "@/redux/features/userDetailsSlice";
-import { useSelector } from "react-redux";
+
 
 const ProductsPage = async () => {
   try {

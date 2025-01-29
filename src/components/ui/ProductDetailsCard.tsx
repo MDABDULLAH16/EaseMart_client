@@ -1,13 +1,18 @@
 "use client";
 import { addToCart } from "@/redux/features/cartSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { selectUserInfo, setUserInfo } from "@/redux/features/userDetailsSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { TProduct } from "@/types/TProducts";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const ProductDetailsCard = ({ product }: { product: TProduct }) => {
   const dispatch = useAppDispatch();
+  const user = useSelector(selectUserInfo);
+  console.log(user);
 
   const handleAddToCart = () => {
     dispatch(addToCart(product)); // Dispatch the action to add product to cart
@@ -46,12 +51,21 @@ const ProductDetailsCard = ({ product }: { product: TProduct }) => {
 
           <ul className="mt-4 list-disc list-inside text-gray-600">{}</ul>
 
-          <button
-            onClick={handleAddToCart}
-            className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-md"
-          >
-            Add to Cart
-          </button>
+          {user?.role === "admin" ? (
+            <Link href='/product/addProduct'
+             
+              className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-md"
+            >
+              Update the Product
+            </Link>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-md"
+            >
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>
