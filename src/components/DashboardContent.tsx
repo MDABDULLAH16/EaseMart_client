@@ -1,35 +1,10 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
-import { RootState } from "@/redux/store";
+import { selectUserInfo } from "@/redux/features/userDetailsSlice";
 import { useSelector } from "react-redux";
 
-type DashboardContentProps = {
-  session: {
-    user?: {
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
-    };
-  } | null;
-};
-
-const DashboardContent = ({ session }: DashboardContentProps) => {
-  const EmailUser = useAppSelector(
-    (state: RootState) => state?.userDetails?.userDetails
-  );
-
-  // Determine logged-in user
-  const loggedInUser = session?.user || EmailUser;
-  console.log("old data", loggedInUser);
-
-  // Access user details from Redux state
-  const user = useSelector((state: RootState) => state.auth.user);
-  console.log("lucy user", user);
-
-  // if (!userDetails) {
-  //   return <div>Loading...</div>;
-  // }
+const DashboardContent = () => {
+  const user = useSelector(selectUserInfo);
 
   return (
     <div className="p-4">
