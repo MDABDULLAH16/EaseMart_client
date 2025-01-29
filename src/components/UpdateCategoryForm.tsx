@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation"; // Import useRouter
 
 const UpdateCategoryForm = ({ category }: { category: TCategory }) => {
-  //   const router = useRouter(); // Initialize router
+  const router = useRouter(); // Initialize router
 
   const [formData, setFormData] = useState({
     name: category.name || "",
@@ -32,7 +32,7 @@ const UpdateCategoryForm = ({ category }: { category: TCategory }) => {
     try {
       const res = await UpdateCategory(category._id, formData);
       toast.success(res?.message || "Category updated successfully!");
-
+      router.push("/admin/categoryManagement");
       // Redirect to the category management page
       //   router.push("/categoryManagement"); // Change to your category management route
     } catch (err: any) {

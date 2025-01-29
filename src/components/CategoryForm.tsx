@@ -1,14 +1,19 @@
 "use client";
+
 import CategoryCreate from "@/utils/actions/CategoryCreate";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const CategoryForm = () => {
+  const router = useRouter(); // Initialize Next.js router
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     image: "",
   });
+
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -19,15 +24,20 @@ const CategoryForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       const res = await CategoryCreate(formData);
-      toast.success(res?.message);
+      toast.success(res?.message || "Category created successfully!");
+
+      // Redirect to Category Management after success
+      router.push("/admin/categoryManagement");
     } catch (err: any) {
-      console.log(err.message);
-      throw new Error(err.message);
+      toast.error("Failed to create category. Try again.");
+      console.error(err.message);
+    } finally {
+      setLoading(false);
     }
-    // Submit form data here
-    console.log("Form Data:", formData);
   };
 
   return (
@@ -50,7 +60,7 @@ const CategoryForm = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-lg  shadow-sm focus:ring-indigo-500 focus:border-indigo-800"
+            className="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-800"
             placeholder="Enter category name"
             required
           />
@@ -98,9 +108,10 @@ const CategoryForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-indigo-400 text-white font-semibold rounded-lg shadow-md hover:bg-accent transition duration-200"
+          className="w-full py-2 px-4 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition duration-200 disabled:opacity-50"
+          disabled={loading}
         >
-          Submit
+          {loading ? "Creating..." : "Submit"}
         </button>
       </form>
     </div>

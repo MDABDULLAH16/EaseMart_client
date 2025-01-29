@@ -1,9 +1,17 @@
-const UserManagePage = () => {
+import UserTable from "@/components/UserTable";
+import { TUser } from "./../../../../types/TUser";
+
+const UserManagePage = async () => {
+  const res = await fetch(`${process.env.BACKEND_URL}/auth`, {
+    cache: "no-cache",
+  });
+  const data = await res.json();
+  const users = data?.data;
+
   return (
     <div>
-      <h1 className="text-4xl text-center mt-10">
-        show here user info and user management
-      </h1>
+      {/* Pass entire users array to UserTable */}
+      <UserTable user={users} />
     </div>
   );
 };

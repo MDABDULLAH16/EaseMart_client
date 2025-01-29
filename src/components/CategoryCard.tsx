@@ -1,6 +1,7 @@
 import { TCategory } from "@/types/TCategory";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteButton from "./ui/DeleteButton";
 
 const CategoryCard = ({ category }: { category: TCategory }) => {
   return (
@@ -23,6 +24,10 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
         </p>
       </div>
       <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
+        <DeleteButton
+          key={category._id}
+          categoryId={category._id}
+        ></DeleteButton>
         <Link
           href={`/admin/categoryManagement/${category._id}`}
           className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 text-sm font-semibold shadow-md hover:shadow-lg"

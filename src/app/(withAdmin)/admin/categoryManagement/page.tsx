@@ -1,5 +1,6 @@
 import CategoryCard from "@/components/CategoryCard";
-import CategoryForm from "@/components/CategoryForm";
+
+import AddCateButton from "@/components/ui/AddCateButton";
 import { TCategory } from "@/types/TCategory";
 
 const CategoryManagement = async () => {
@@ -21,7 +22,8 @@ const CategoryManagement = async () => {
     return (
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-4">Category Management</h1>
-        <CategoryForm />
+
+        <AddCateButton />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {categories.map((category: TCategory) => (

@@ -1,4 +1,6 @@
 import ProductContainer from "@/components/ProductContainer";
+import { selectUserInfo } from "@/redux/features/userDetailsSlice";
+import { useSelector } from "react-redux";
 
 const ProductsPage = async () => {
   try {
@@ -18,9 +20,6 @@ const ProductsPage = async () => {
 
     return (
       <div>
-        <h1 className="text-3xl font-bold text-center my-6">
-          Stay busy with Ease Product
-        </h1>
         <ProductContainer products={products} categories={categories} />
       </div>
     );
