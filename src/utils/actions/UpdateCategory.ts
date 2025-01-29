@@ -1,8 +1,14 @@
+"use server";
 import { TCategory } from "@/types/TCategory";
 
 const UpdateCategory = async (id: string, data: TCategory) => {
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/categories/${id}`, {
+    const BACKEND_URL = process.env.BACKEND_URL;
+    // if (!BACKEND_URL) {
+    //   toast.warn("url not fount");
+    //   return;
+    // }
+    const res = await fetch(`${BACKEND_URL}/categories/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
